@@ -1,0 +1,1094 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>SS5212 LT2 × Lecture 10 Practice Quiz</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 16px;
+      font-family: Arial, sans-serif;
+      line-height: 1.55;
+      color: #243047;
+      background: #f3f6fb;
+    }
+
+    .container {
+      max-width: 850px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      color: #29457d;
+      font-size: 1.8rem;
+      line-height: 1.25;
+    }
+
+    .intro,
+    .question,
+    .result {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 18px;
+      margin: 16px 0;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 20px;
+      background: #eaf0ff;
+      color: #31529b;
+      font-size: 0.85rem;
+      font-weight: bold;
+    }
+
+    .question h2 {
+      margin: 12px 0;
+      font-size: 1.05rem;
+      line-height: 1.5;
+    }
+
+    label {
+      display: block;
+      padding: 10px;
+      margin: 7px 0;
+      border-radius: 8px;
+      background: #f7f9fc;
+      cursor: pointer;
+    }
+
+    label:hover {
+      background: #edf2ff;
+    }
+
+    input[type="radio"] {
+      margin-right: 8px;
+    }
+
+    button {
+      border: 0;
+      border-radius: 8px;
+      padding: 13px 18px;
+      margin: 8px 8px 8px 0;
+      background: #3158ad;
+      color: #ffffff;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #24458e;
+    }
+
+    .reset-button {
+      background: #69758a;
+    }
+
+    .feedback {
+      display: none;
+      margin-top: 12px;
+      padding: 12px;
+      border-radius: 8px;
+      background: #edf3ff;
+    }
+
+    .correct {
+      color: #14743a;
+      font-weight: bold;
+    }
+
+    .incorrect {
+      color: #b42929;
+      font-weight: bold;
+    }
+
+    .result {
+      display: none;
+      border-left: 5px solid #3158ad;
+    }
+
+    .small {
+      color: #526078;
+      font-size: 0.9rem;
+    }
+
+    #progress {
+      color: #31529b;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+<div class="container">
+
+  <h1>SS5212 LT2 × Lecture 10 Practice Quiz</h1>
+
+  <div class="intro">
+    <p>
+      <strong>50 original multiple-choice questions</strong>
+    </p>
+
+    <p>
+      Choose one answer for each question. Press
+      <strong>Submit answers</strong> to see your score,
+      correct answers and Chinese explanations.
+    </p>
+
+    <p>
+      ⭐ <strong>Core:</strong> LT2 topics overlapping with Lecture 10.<br>
+      🧠 <strong>Supplementary:</strong> brain development; exam scope
+      to be confirmed.<br>
+      📘 <strong>Supplementary:</strong> additional LT2 concepts.
+    </p>
+
+    <p class="small">
+      No ACE or stress response questions are included.
+      These are original practice questions, not verified CityU past papers.
+    </p>
+
+    <p class="small">
+      The quiz tries to save your selections in this browser.
+      Progress does not automatically sync across devices.
+      Private browsing or clearing browser data may remove it.
+    </p>
+
+    <p id="progress" aria-live="polite"></p>
+    <p id="storageMessage" class="small" aria-live="polite"></p>
+  </div>
+
+  <div id="result" class="result" aria-live="polite"></div>
+
+  <form id="quiz"></form>
+
+  <button type="button" id="submitButton">
+    Submit answers
+  </button>
+
+  <button type="button" id="resetButton" class="reset-button">
+    Reset quiz
+  </button>
+
+</div>
+
+<script>
+/*
+  The first option in each question is the correct answer.
+  The display order is rotated automatically so that the
+  correct answer is not always shown as option A.
+*/
+
+const questions = [
+
+  // ==================================================
+  // QUESTIONS 1–20: MARCIA
+  // ==================================================
+
+  {
+    tag: "⭐ Core — Marcia: exploration",
+    q: "A secondary-school student attends career talks, interviews people in different professions and compares possible study pathways. The student has not yet chosen a direction. Which element of Marcia's theory is most clearly demonstrated?",
+    options: [
+      "Active exploration of alternatives",
+      "A firm commitment without exploration",
+      "A stable commitment after exploration",
+      "A lack of both exploration and interest"
+    ],
+    explanation: "學生正在比較不同選擇，屬 exploration；題目沒有顯示已作出穩定 commitment。"
+  },
+
+  {
+    tag: "⭐ Core — Marcia: commitment",
+    q: "A young person has decided to pursue social work and is personally invested in that decision. Which dimension of Marcia's model is most directly illustrated?",
+    options: [
+      "Commitment",
+      "Exploration without commitment",
+      "Role confusion alone",
+      "Synaptic pruning"
+    ],
+    explanation: "Commitment 指對某個選擇作出決定並投入。單憑此資料，不能判斷之前是否曾探索。"
+  },
+
+  {
+    tag: "⭐ Core — Marcia: foreclosure",
+    q: "A student says, 'My family has always expected me to become an accountant, so that is what I will do. I have never considered another occupation.' Which identity status is most consistent with this account?",
+    options: [
+      "Foreclosure",
+      "Moratorium",
+      "Diffusion",
+      "Achievement"
+    ],
+    explanation: "已作決定，但沒有探索其他選擇：高 commitment、低 exploration，是 foreclosure。"
+  },
+
+  {
+    tag: "⭐ Core — Marcia: moratorium",
+    q: "A student is actively comparing careers in teaching, design and nursing. The student has not yet made a firm choice. Which identity status is most consistent with the case?",
+    options: [
+      "Moratorium",
+      "Foreclosure",
+      "Achievement",
+      "Diffusion"
+    ],
+    explanation: "正在積極探索，但尚未作出明確承諾：高 exploration、低 commitment，是 moratorium。"
+  },
+
+  {
+    tag: "⭐ Core — Marcia: diffusion",
+    q: "A teenager has neither considered future study options nor made a decision. When asked, the teenager says the issue is not something they are currently interested in. Which status is most consistent with the information?",
+    options: [
+      "Diffusion",
+      "Moratorium",
+      "Foreclosure",
+      "Achievement"
+    ],
+    explanation: "沒有探索，也沒有作出承諾，最符合 diffusion。不能額外推斷這位少年必然社交孤立。"
+  },
+
+  {
+    tag: "⭐ Core — Marcia: achievement",
+    q: "After examining several religious and non-religious perspectives, a young adult chooses a set of beliefs and explains why those beliefs are personally meaningful. Which status best fits this domain?",
+    options: [
+      "Achievement",
+      "Foreclosure",
+      "Moratorium",
+      "Diffusion"
+    ],
+    explanation: "先探索不同選項，然後作出個人承諾，是 achievement。這個判斷只適用於題目描述的信念領域。"
+  },
+
+  {
+    tag: "⭐ Core — Foreclosure vs moratorium",
+    q: "Two students are considering university majors. Student A has accepted the family's choice without considering alternatives. Student B is comparing several majors but remains undecided. Which pairing is most accurate?",
+    options: [
+      "A: foreclosure; B: moratorium",
+      "A: moratorium; B: foreclosure",
+      "A: achievement; B: diffusion",
+      "A: diffusion; B: achievement"
+    ],
+    explanation: "A 已承諾但未探索，是 foreclosure；B 正在探索但未承諾，是 moratorium。"
+  },
+
+  {
+    tag: "⭐ Core — Diffusion vs moratorium",
+    q: "Student A has not explored or chosen a career. Student B has not chosen a career but is actively researching different possibilities. What distinguishes the two students?",
+    options: [
+      "B is exploring, whereas A is not",
+      "A has a firm commitment, whereas B does not",
+      "Both have completed exploration and commitment",
+      "Neither student is exploring"
+    ],
+    explanation: "兩人都未承諾；區分關鍵在探索：A 較符合 diffusion，B 較符合 moratorium。"
+  },
+
+  {
+    tag: "⭐ Core — Foreclosure vs achievement",
+    q: "Two young people are committed to the same occupation. One adopted the decision without considering other options; the other compared several alternatives before deciding. Which distinction is most useful?",
+    options: [
+      "Foreclosure versus achievement",
+      "Moratorium versus diffusion",
+      "Diffusion versus moratorium",
+      "Both must be in moratorium"
+    ],
+    explanation: "兩人均有 commitment，但前者缺乏探索，是 foreclosure；後者經探索後承諾，是 achievement。"
+  },
+
+  {
+    tag: "⭐ Core — Marcia: crisis",
+    q: "A teenager questions previously accepted beliefs and examines alternatives. In Marcia's framework, the term 'crisis' most directly refers to:",
+    options: [
+      "A period of active exploration and decision-making",
+      "Proof of a psychiatric emergency",
+      "A decision already made without alternatives",
+      "The absence of interest in identity questions"
+    ],
+    explanation: "Marcia 的 crisis 是對重要選項的探索與重新考慮，不必然是精神科危機。"
+  },
+
+  {
+    tag: "⭐ Core — Marcia: identity domains",
+    q: "A university student has explored and chosen a career but is still actively considering religious beliefs. What is the most appropriate conclusion?",
+    options: [
+      "Identity status may differ across life domains",
+      "The student must have the same status in every domain",
+      "Career commitment proves religious commitment",
+      "The student cannot be exploring beliefs after choosing a career"
+    ],
+    explanation: "身份狀態可以因領域而異：職業上可能是 achievement，信念上仍可能是 moratorium。"
+  },
+
+  {
+    tag: "⭐ Core — Marcia: change",
+    q: "A young adult previously accepted a family career plan without question. Later, the person begins exploring alternatives and has not yet made a new decision. Which interpretation best fits the change?",
+    options: [
+      "A movement from foreclosure toward moratorium in the career domain",
+      "A movement from achievement to a fixed biological stage",
+      "Proof that identity statuses never change",
+      "A movement from diffusion to achievement without exploration"
+    ],
+    explanation: "原本未探索便承諾，較符合 foreclosure；開始探索而未定案，較符合 moratorium。狀態可改變，不必依固定次序。"
+  },
+
+  {
+    tag: "⭐ Core — Commitment",
+    q: "A student says, 'I am considering several options, but I have not decided which one I would pursue.' Which dimension is most clearly low or not yet established?",
+    options: [
+      "Commitment",
+      "Exploration",
+      "Intellectual ability",
+      "Social identity"
+    ],
+    explanation: "題目明示正在考慮不同選項，但未決定，因此缺少明確 commitment。"
+  },
+
+  {
+    tag: "⭐ Core — Foreclosure",
+    q: "A teenager joins a political group because close friends insist on it. The teenager adopts its position without examining other viewpoints. Which status is most consistent with the political domain?",
+    options: [
+      "Foreclosure",
+      "Achievement",
+      "Moratorium",
+      "Diffusion"
+    ],
+    explanation: "接受同儕觀點並作出選擇，但沒有探索其他立場，較符合 foreclosure。Foreclosure 不一定只來自父母。"
+  },
+
+  {
+    tag: "⭐ Core — Moratorium",
+    q: "A young person visits different community groups to understand where they feel they belong. They say they are not ready to identify with any one group. Which status best fits?",
+    options: [
+      "Moratorium",
+      "Foreclosure",
+      "Achievement",
+      "Diffusion"
+    ],
+    explanation: "主動接觸不同群體以尋找歸屬，但尚未確立選擇，是 moratorium。"
+  },
+
+  {
+    tag: "⭐ Core — Achievement",
+    q: "A student tried several extracurricular groups, reflected on the experience, and then committed to one that fits their values. Which status is most consistent with this decision?",
+    options: [
+      "Achievement",
+      "Foreclosure",
+      "Diffusion",
+      "Moratorium"
+    ],
+    explanation: "先探索，再根據個人價值作出選擇，符合 achievement。"
+  },
+
+  {
+    tag: "⭐ Core — Evidence and classification",
+    q: "A student states, 'I will become a teacher.' No information is given about whether other careers were considered. Which conclusion is best supported?",
+    options: [
+      "The student has expressed a commitment, but exploration history is unknown",
+      "The student must be in foreclosure",
+      "The student must be in achievement",
+      "The student has neither explored nor committed"
+    ],
+    explanation: "單憑已有選擇，只能確認表達了 commitment；未知道探索歷程，不能直接分為 foreclosure 或 achievement。"
+  },
+
+  {
+    tag: "⭐ Core — Exploration vs participation",
+    q: "A teenager attends several clubs only because attendance is compulsory and has not reflected on whether any group fits their interests. Which assessment is most cautious?",
+    options: [
+      "Attendance alone does not establish meaningful identity exploration",
+      "The teenager has certainly achieved an identity",
+      "Trying several activities automatically proves commitment",
+      "The teenager must be in foreclosure"
+    ],
+    explanation: "參加多項活動不一定等於有意義的身份探索；需了解本人是否在比較及反思選擇。"
+  },
+
+  {
+    tag: "⭐ Core — Social context",
+    q: "A young person wants to explore several education pathways but has limited financial resources and family responsibilities. Which interpretation best reflects the lecture's discussion of identity?",
+    options: [
+      "Exploration and commitment occur within a social context that can shape available options",
+      "Identity choices are completely independent of circumstances",
+      "Limited resources automatically prove diffusion",
+      "Family responsibilities make identity development impossible"
+    ],
+    explanation: "課堂指出身份選擇在社會情境中進行；資源和責任可影響選項，但不能單憑限制判定狀態。"
+  },
+
+  {
+    tag: "⭐ Core — Four statuses",
+    q: "Which combination correctly describes identity achievement?",
+    options: [
+      "Exploration followed by a meaningful commitment",
+      "Commitment without considering alternatives",
+      "Active exploration without a clear commitment",
+      "Neither exploration nor commitment"
+    ],
+    explanation: "Achievement 是經過探索後作出承諾；其他選項依次較符合 foreclosure、moratorium 和 diffusion。"
+  },
+
+  // ==================================================
+  // QUESTIONS 21–32: PARENTING
+  // ==================================================
+
+  {
+    tag: "⭐ Core — Parenting dimensions",
+    q: "In Baumrind's framework, which two dimensions are used in the lecture to distinguish parenting styles?",
+    options: [
+      "Demandingness and responsiveness",
+      "Intelligence and income",
+      "Exploration and commitment",
+      "Intimacy and passion"
+    ],
+    explanation: "教養方式以 demandingness／control 和 responsiveness／warmth 兩個維度區分。"
+  },
+
+  {
+    tag: "⭐ Core — Authoritative",
+    q: "Parents set a reasonable curfew, explain its purpose, listen to their teenager's concerns and adjust the arrangement after discussion. Which style best fits the pattern?",
+    options: [
+      "Authoritative",
+      "Authoritarian",
+      "Permissive",
+      "Neglectful"
+    ],
+    explanation: "有清晰要求，也有溫暖和聆聽，屬高 demandingness、高 responsiveness 的 authoritative。"
+  },
+
+  {
+    tag: "⭐ Core — Authoritarian",
+    q: "A parent imposes strict rules, refuses to discuss them and responds coldly when the child asks for an explanation. Which style best fits?",
+    options: [
+      "Authoritarian",
+      "Authoritative",
+      "Permissive",
+      "Neglectful"
+    ],
+    explanation: "高要求、低溫暖，加上不容討論，較符合 authoritarian。"
+  },
+
+  {
+    tag: "⭐ Core — Permissive",
+    q: "A caregiver is affectionate and responsive but rarely sets or follows through on limits, even when the teenager repeatedly ignores agreed rules. Which style is most consistent?",
+    options: [
+      "Permissive",
+      "Authoritative",
+      "Authoritarian",
+      "Neglectful"
+    ],
+    explanation: "高溫暖、低要求或少界線，較符合 permissive。"
+  },
+
+  {
+    tag: "⭐ Core — Neglectful",
+    q: "A parent rarely responds to the child's emotional needs and sets few expectations or limits. Which pattern is most consistent?",
+    options: [
+      "Neglectful",
+      "Authoritative",
+      "Authoritarian",
+      "Permissive"
+    ],
+    explanation: "低 responsiveness 和低 demandingness，符合課堂對 neglectful 的分類。"
+  },
+
+  {
+    tag: "⭐ Core — Authoritative vs authoritarian",
+    q: "Two parents both expect their children to complete homework. Parent A explains expectations and listens to concerns; Parent B demands obedience without discussion and offers little warmth. Which pairing best fits?",
+    options: [
+      "A: authoritative; B: authoritarian",
+      "A: authoritarian; B: authoritative",
+      "A: permissive; B: neglectful",
+      "A: neglectful; B: permissive"
+    ],
+    explanation: "兩人要求都高；關鍵是溫暖及回應。A 是 authoritative，B 是 authoritarian。"
+  },
+
+  {
+    tag: "⭐ Core — Warmth",
+    q: "A caregiver notices a teenager is upset, listens carefully and takes the teenager's point of view seriously. Which parenting dimension is most directly illustrated?",
+    options: [
+      "Responsiveness",
+      "Demandingness",
+      "Identity diffusion",
+      "Role confusion"
+    ],
+    explanation: "敏感回應需要、表達關懷及重視孩子觀點，屬 responsiveness／warmth。"
+  },
+
+  {
+    tag: "⭐ Core — Demandingness",
+    q: "A parent establishes age-appropriate expectations and follows through on agreed responsibilities. Which parenting dimension is most directly illustrated?",
+    options: [
+      "Demandingness",
+      "Responsiveness",
+      "Exploration",
+      "Attachment avoidance"
+    ],
+    explanation: "設定清晰期望及要求履行責任，主要反映 demandingness。單憑此資料不能判斷整體教養類型。"
+  },
+
+  {
+    tag: "⭐ Core — Permissive vs neglectful",
+    q: "Two caregivers set very few limits. One is warm and involved; the other is emotionally distant and rarely interacts with the child. Which pairing is most appropriate?",
+    options: [
+      "Permissive; neglectful",
+      "Neglectful; permissive",
+      "Authoritative; authoritarian",
+      "Authoritarian; authoritative"
+    ],
+    explanation: "兩者要求均低；高溫暖是 permissive，低溫暖及少互動是 neglectful。"
+  },
+
+  {
+    tag: "⭐ Core — Parenting classification",
+    q: "A social worker observes one disagreement between a parent and a teenager. What is the most cautious conclusion?",
+    options: [
+      "One interaction alone is insufficient to establish a stable parenting style",
+      "The parent must be authoritarian",
+      "The parent must be neglectful",
+      "The teenager's future development is already determined"
+    ],
+    explanation: "教養分類涉及較持續的要求與回應模式；不能單憑一次爭執定型或預測未來。"
+  },
+
+  {
+    tag: "⭐ Core — Parenting and support",
+    q: "A parent wants to set limits while supporting a teenager's growing independence. Which response is most consistent with authoritative parenting?",
+    options: [
+      "Explain expectations, listen to concerns and maintain reasonable boundaries",
+      "Remove every boundary whenever the teenager objects",
+      "Demand obedience while refusing all discussion",
+      "Avoid involvement in the teenager's life"
+    ],
+    explanation: "Authoritative 強調清楚界線，同時提供溫暖、解釋及適當自主空間。"
+  },
+
+  {
+    tag: "⭐ Core — Parenting outcomes",
+    q: "A student claims that a child raised by authoritarian parents will certainly have low self-esteem as an adult. Which response is most appropriate?",
+    options: [
+      "Parenting patterns may be associated with outcomes, but an individual outcome is not guaranteed",
+      "Parenting determines every later outcome without exception",
+      "Self-esteem can never relate to family experiences",
+      "A parenting style can be diagnosed from a single grade"
+    ],
+    explanation: "課堂討論可能的關聯和結果，但不能把群體趨勢當成個人必然命運。"
+  },
+
+  // ==================================================
+  // QUESTIONS 33–40: ERIKSON
+  // ==================================================
+
+  {
+    tag: "⭐ Core — Erikson: identity",
+    q: "A teenager asks, 'What values matter to me, and what sort of adult do I want to become?' Which Eriksonian psychosocial tension is most directly relevant?",
+    options: [
+      "Identity versus role confusion",
+      "Trust versus mistrust",
+      "Industry versus inferiority",
+      "Integrity versus despair"
+    ],
+    explanation: "青少年思考自我、價值和未來角色，最直接涉及 identity versus role confusion。"
+  },
+
+  {
+    tag: "⭐ Core — Erikson: experimentation",
+    q: "A student tries different roles in a school production and considers which responsibilities feel meaningful. Which process is most closely related to Erikson's adolescent task?",
+    options: [
+      "Role experimentation",
+      "Automatic commitment without reflection",
+      "Avoidance of all social interaction",
+      "Completion of retirement planning"
+    ],
+    explanation: "Erikson 的青少年身份發展強調嘗試不同角色和想法，以形成較連貫的自我。"
+  },
+
+  {
+    tag: "⭐ Core — Erikson: crisis",
+    q: "A student says that a developmental crisis always means something has gone seriously wrong. Which correction best reflects Erikson's theory?",
+    options: [
+      "A psychosocial crisis can be a normal developmental tension associated with new demands",
+      "A crisis is always a clinical diagnosis",
+      "A crisis occurs only in adolescence",
+      "A crisis means development has permanently stopped"
+    ],
+    explanation: "Erikson 的 crisis 可指正常發展中的張力和任務，不一定代表臨床問題。"
+  },
+
+  {
+    tag: "⭐ Core — Erikson: virtue",
+    q: "A teenager develops a coherent set of values and can remain loyal to those values despite disagreement from peers. Which virtue is most closely associated with the identity stage?",
+    options: [
+      "Fidelity",
+      "Hope",
+      "Will",
+      "Competence"
+    ],
+    explanation: "身份階段常與 fidelity 連結，即能維持對他人或價值的忠誠。"
+  },
+
+  {
+    tag: "⭐ Core — Identity vs industry",
+    q: "One student is concerned about mastering schoolwork and feeling capable. Another is questioning personal values and future roles. Which pairing best matches the central concerns?",
+    options: [
+      "Industry versus inferiority; identity versus role confusion",
+      "Identity versus role confusion; trust versus mistrust",
+      "Intimacy versus isolation; integrity versus despair",
+      "Trust versus mistrust; autonomy versus shame"
+    ],
+    explanation: "掌握技能和能力感偏向 industry；思考價值與未來角色偏向 identity。"
+  },
+
+  {
+    tag: "⭐ Core — Psychological moratorium",
+    q: "A teenager temporarily keeps future options open while trying different roles and values. In the LT2 discussion of Erikson, this is most closely related to:",
+    options: [
+      "Psychological moratorium",
+      "A permanent refusal to develop",
+      "An attachment classification",
+      "A completed commitment to every role"
+    ],
+    explanation: "心理社會 moratorium 指暫時保留空間探索身份，並不代表永久停止發展。"
+  },
+
+  {
+    tag: "⭐ Core — Erikson and Marcia",
+    q: "How does Marcia's model extend the discussion of identity associated with Erikson?",
+    options: [
+      "It distinguishes identity statuses using exploration and commitment",
+      "It replaces identity with four attachment patterns",
+      "It classifies parenting solely by income",
+      "It assumes exploration always ends in the same result"
+    ],
+    explanation: "Marcia 延伸 Erikson 的身份議題，以 exploration 和 commitment 區分四種狀態。"
+  },
+
+  {
+    tag: "⭐ Core — Avoiding overinterpretation",
+    q: "A teenager changes their preferred career twice during a school year. Which interpretation is most appropriate?",
+    options: [
+      "The changes may be part of exploration; more information is needed",
+      "The changes prove a permanent identity disorder",
+      "The teenager cannot develop a stable identity",
+      "The teenager must already be in foreclosure"
+    ],
+    explanation: "改變想法可能是探索的一部分，但仍需了解選擇、承諾及情境，不能直接診斷。"
+  },
+
+  // ==================================================
+  // QUESTIONS 41–46: BRAIN SUPPLEMENT
+  // ==================================================
+
+  {
+    tag: "🧠 Supplementary — Prefrontal cortex",
+    q: "A teenager pauses before a difficult decision, compares consequences and plans a response. Which region is especially associated with planning and cognitive control?",
+    options: [
+      "Prefrontal cortex",
+      "Hippocampus alone",
+      "Cerebellum alone",
+      "Brain stem alone"
+    ],
+    explanation: "前額葉皮層與規劃、認知控制及複雜決策有關。實際決策仍涉及多個腦區及環境因素。"
+  },
+
+  {
+    tag: "🧠 Supplementary — Amygdala",
+    q: "Which brain structure discussed in LT2 is particularly associated with emotional responses such as fear?",
+    options: [
+      "Amygdala",
+      "Hippocampus",
+      "Prefrontal cortex",
+      "Occipital lobe"
+    ],
+    explanation: "Amygdala（杏仁核）與恐懼等情緒反應有關；不要與主要涉及記憶的 hippocampus 混淆。"
+  },
+
+  {
+    tag: "🧠 Supplementary — Hippocampus",
+    q: "A student learns a route through an unfamiliar neighbourhood and later remembers it. Which structure is especially associated with memory and spatial orientation?",
+    options: [
+      "Hippocampus",
+      "Amygdala",
+      "Brain stem",
+      "Prefrontal cortex alone"
+    ],
+    explanation: "Hippocampus（海馬體）與記憶形成及空間定位有關。"
+  },
+
+  {
+    tag: "🧠 Supplementary — Pruning",
+    q: "Which statement best describes synaptic pruning during development?",
+    options: [
+      "Some neural connections are eliminated as networks are shaped",
+      "All neural connections disappear",
+      "The brain becomes unable to learn",
+      "Every adolescent loses identical connections at the same age"
+    ],
+    explanation: "突觸修剪涉及部分連結被消除，不代表所有連結消失或失去學習能力；發展亦有個體差異。"
+  },
+
+  {
+    tag: "🧠 Supplementary — Myelination",
+    q: "In the LT2 discussion of brain development, myelination is associated with:",
+    options: [
+      "Faster and more efficient transmission along neural pathways",
+      "The removal of every neuron",
+      "The end of all brain development",
+      "The formation of an identity commitment"
+    ],
+    explanation: "髓鞘化有助神經訊號更快、更有效率地傳遞。"
+  },
+
+  {
+    tag: "🧠 Supplementary — Risk and context",
+    q: "A social worker discusses adolescent risk-taking with parents. Which explanation is most cautious?",
+    options: [
+      "Developing control systems and social context can both influence decisions, with substantial individual variation",
+      "Every teenager will make risky choices because of one brain region",
+      "Peer context can never influence decisions",
+      "Brain development completely determines a person's future behaviour"
+    ],
+    explanation: "腦部發展、情境和同儕都可能影響決策；不要把課堂模型簡化成所有青少年必然冒險。"
+  },
+
+  // ==================================================
+  // QUESTIONS 47–50: LT2 EXTENSIONS
+  // ==================================================
+
+  {
+    tag: "📘 Supplementary — Self-concept",
+    q: "A student describes themselves as a patient friend and a capable musician. These descriptions most directly concern:",
+    options: [
+      "Self-concept",
+      "A formal clinical diagnosis",
+      "Synaptic pruning",
+      "Parenting demandingness"
+    ],
+    explanation: "Self-concept 是對自己特徵及能力的理解；不等同臨床診斷。"
+  },
+
+  {
+    tag: "📘 Supplementary — Direct appraisal",
+    q: "After successfully organising several events, a student concludes, 'I am good at planning.' Which source of self-concept is most directly illustrated?",
+    options: [
+      "Direct appraisal based on personal experiences",
+      "Reflected appraisal based only on others' presumed views",
+      "A parenting style",
+      "Identity foreclosure"
+    ],
+    explanation: "根據自己的經驗及反應理解自己，是 direct appraisal。"
+  },
+
+  {
+    tag: "📘 Supplementary — Reflected appraisal",
+    q: "A teenager thinks, 'My classmates seem to see me as helpful, so I may be a helpful person.' Which concept best fits?",
+    options: [
+      "Reflected appraisal",
+      "Synaptic pruning",
+      "Demandingness",
+      "Identity achievement"
+    ],
+    explanation: "依據自己對他人如何看待自己的理解來形成自我概念，是 reflected appraisal。"
+  },
+
+  {
+    tag: "📘 Supplementary — Self-esteem",
+    q: "After receiving a disappointing exam result, a student says, 'I did poorly on this test, but that does not mean I am a worthless person.' Which distinction is most relevant?",
+    options: [
+      "A specific performance can differ from overall self-worth",
+      "One grade completely defines global self-esteem",
+      "Self-esteem is identical to a parenting style",
+      "A low test result proves identity diffusion"
+    ],
+    explanation: "特定表現與整體自我價值可以分開；一次考試結果不應直接等同個人的整體價值。"
+  }
+
+];
+
+// ==================================================
+// QUIZ FUNCTIONS
+// ==================================================
+
+const storageKey = "ss5212-lt2-lecture10-quiz-v1";
+const quiz = document.getElementById("quiz");
+const result = document.getElementById("result");
+const progress = document.getElementById("progress");
+const storageMessage = document.getElementById("storageMessage");
+
+let savedAnswers = {};
+let storageAvailable = true;
+let submitted = false;
+
+try {
+  const saved = localStorage.getItem(storageKey);
+
+  if (saved) {
+    const parsed = JSON.parse(saved);
+
+    if (parsed && typeof parsed === "object") {
+      savedAnswers = parsed;
+    }
+  }
+} catch (error) {
+  savedAnswers = {};
+  storageAvailable = false;
+  storageMessage.textContent =
+    "Browser storage is unavailable. Your answers may not be saved.";
+}
+
+function saveAnswers() {
+  try {
+    localStorage.setItem(
+      storageKey,
+      JSON.stringify(savedAnswers)
+    );
+  } catch (error) {
+    storageAvailable = false;
+    storageMessage.textContent =
+      "Browser storage is unavailable. Your answers may not be saved.";
+  }
+}
+
+function getDisplayedOptions(item, index) {
+  /*
+    Rotate the four choices by question number.
+    Each choice retains its original index, so scoring
+    always uses the correct original answer.
+  */
+  const items = item.options.map((text, originalIndex) => ({
+    text: text,
+    originalIndex: originalIndex
+  }));
+
+  const shift = index % items.length;
+
+  return items.slice(shift).concat(items.slice(0, shift));
+}
+
+function updateProgress() {
+  let count = 0;
+
+  questions.forEach((item, index) => {
+    if (savedAnswers[index] !== undefined) {
+      count++;
+    }
+  });
+
+  progress.textContent =
+    `Answered: ${count} / ${questions.length}`;
+}
+
+function hideResults() {
+  result.style.display = "none";
+  result.innerHTML = "";
+
+  document.querySelectorAll(".feedback").forEach((box) => {
+    box.style.display = "none";
+    box.innerHTML = "";
+  });
+
+  submitted = false;
+}
+
+function renderQuiz() {
+  quiz.innerHTML = "";
+
+  questions.forEach((item, index) => {
+    const section = document.createElement("section");
+    section.className = "question";
+
+    const tag = document.createElement("span");
+    tag.className = "tag";
+    tag.textContent = item.tag;
+    section.appendChild(tag);
+
+    const heading = document.createElement("h2");
+    heading.textContent = `Question ${index + 1}. ${item.q}`;
+    section.appendChild(heading);
+
+    const displayedOptions = getDisplayedOptions(item, index);
+
+    displayedOptions.forEach((choice, displayIndex) => {
+      const label = document.createElement("label");
+      const radio = document.createElement("input");
+
+      radio.type = "radio";
+      radio.name = `question-${index}`;
+      radio.value = choice.originalIndex;
+
+      if (
+        savedAnswers[index] !== undefined &&
+        Number(savedAnswers[index]) === choice.originalIndex
+      ) {
+        radio.checked = true;
+      }
+
+      radio.addEventListener("change", () => {
+        savedAnswers[index] = choice.originalIndex;
+        saveAnswers();
+        updateProgress();
+
+        // Prevent a previous score from becoming stale.
+        if (submitted) {
+          hideResults();
+        }
+      });
+
+      const letter = String.fromCharCode(65 + displayIndex);
+
+      label.appendChild(radio);
+      label.appendChild(
+        document.createTextNode(`${letter}. ${choice.text}`)
+      );
+
+      section.appendChild(label);
+    });
+
+    const feedback = document.createElement("div");
+    feedback.className = "feedback";
+    feedback.id = `feedback-${index}`;
+    section.appendChild(feedback);
+
+    quiz.appendChild(section);
+  });
+
+  updateProgress();
+}
+
+function submitQuiz() {
+  let score = 0;
+  let unanswered = 0;
+
+  questions.forEach((item, index) => {
+    const selected = document.querySelector(
+      `input[name="question-${index}"]:checked`
+    );
+
+    const feedback = document.getElementById(
+      `feedback-${index}`
+    );
+
+    const displayedOptions = getDisplayedOptions(item, index);
+
+    const correctDisplayIndex = displayedOptions.findIndex(
+      (choice) => choice.originalIndex === 0
+    );
+
+    const correctLetter = String.fromCharCode(
+      65 + correctDisplayIndex
+    );
+
+    let status = "";
+
+    if (!selected) {
+      unanswered++;
+      status = "未作答";
+    } else if (Number(selected.value) === 0) {
+      score++;
+      status = "✓ 答對了";
+    } else {
+      status = "✗ 答錯了";
+    }
+
+    feedback.innerHTML = "";
+
+    const statusLine = document.createElement("strong");
+    statusLine.className =
+      selected && Number(selected.value) === 0
+        ? "correct"
+        : "incorrect";
+    statusLine.textContent = status;
+
+    const answerLine = document.createElement("p");
+    answerLine.textContent =
+      `Correct answer: ${correctLetter}. ${item.options[0]}`;
+
+    const explanationLine = document.createElement("p");
+    explanationLine.textContent = item.explanation;
+
+    feedback.appendChild(statusLine);
+    feedback.appendChild(answerLine);
+    feedback.appendChild(explanationLine);
+    feedback.style.display = "block";
+  });
+
+  const percentage = Math.round(
+    (score / questions.length) * 100
+  );
+
+  result.innerHTML = "";
+
+  const heading = document.createElement("h2");
+  heading.textContent =
+    `Your result: ${score} / ${questions.length}`;
+
+  const scoreLine = document.createElement("p");
+  scoreLine.textContent = `Score: ${percentage}%`;
+
+  const unansweredLine = document.createElement("p");
+  unansweredLine.textContent = `Unanswered: ${unanswered}`;
+
+  const reviewLine = document.createElement("p");
+  reviewLine.textContent =
+    "Scroll down to review the correct answers and Chinese explanations.";
+
+  result.appendChild(heading);
+  result.appendChild(scoreLine);
+  result.appendChild(unansweredLine);
+  result.appendChild(reviewLine);
+
+  result.style.display = "block";
+  submitted = true;
+
+  result.scrollIntoView({
+    behavior: "smooth"
+  });
+}
+
+function resetQuiz() {
+  const confirmed = confirm(
+    "Reset all answers? Your saved selections will be cleared."
+  );
+
+  if (!confirmed) {
+    return;
+  }
+
+  savedAnswers = {};
+
+  try {
+    localStorage.removeItem(storageKey);
+  } catch (error) {
+    storageAvailable = false;
+    storageMessage.textContent =
+      "Browser storage is unavailable. Your answers may not be saved.";
+  }
+
+  hideResults();
+  renderQuiz();
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+}
+
+document
+  .getElementById("submitButton")
+  .addEventListener("click", submitQuiz);
+
+document
+  .getElementById("resetButton")
+  .addEventListener("click", resetQuiz);
+
+renderQuiz();
+</script>
+
+</body>
+</html>
